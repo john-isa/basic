@@ -7,7 +7,7 @@ type Position struct {
 	column int
 }
 
-func NewPosition(text_ string) Position {
+func New(text_ string) Position {
 	p := Position{}
 
 	p.text = text_

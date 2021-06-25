@@ -5,7 +5,7 @@ type Token struct {
 	value string
 }
 
-func NewToken(n string, v string) Token {
+func New(n string, v string) Token {
 	t := Token{name: n, value: v}
 	return t
 }

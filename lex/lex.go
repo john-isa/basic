@@ -2,6 +2,8 @@ package lex
 
 import (
 	"fmt"
+
+	"github.com/john-isa/basic/pos"
 )
 
 type Lexer struct {
@@ -11,12 +13,12 @@ type Lexer struct {
 	tokens       []Token
 }
 
-func NewLexer(text string) Lexer {
+func New(text string) Lexer {
 	fmt.Println("Creating the Lexer")
 	l := Lexer{}
 
 	l.details = ""
-	l.position = pos.NewPosition(text)
+	l.position = pos.New(text)
 	l.current_char = ""
 	l.tokens = []Token{}
 	l.Advance()
