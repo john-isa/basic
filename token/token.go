@@ -10,6 +10,12 @@ func New(n string, v string) Token {
 	return t
 }
 
+func NewTokenList() []Token {
+	tokens := []Token{}
+
+	return tokens
+}
+
 func (t *Token) GetToken() string {
 	return t.ToString()
 }

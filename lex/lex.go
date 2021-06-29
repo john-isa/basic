@@ -4,13 +4,14 @@ import (
 	"fmt"
 
 	"github.com/john-isa/basic/pos"
+	"github.com/john-isa/basic/token"
 )
 
 type Lexer struct {
 	details      string
-	position     Position
+	position     pos.Position
 	current_char string
-	tokens       []Token
+	tokens       []token.Token
 }
 
 func New(text string) Lexer {
@@ -20,23 +21,23 @@ func New(text string) Lexer {
 	l.details = ""
 	l.position = pos.New(text)
 	l.current_char = ""
-	l.tokens = []Token{}
+	l.tokens = token.NewTokenList()
 	l.Advance()
 
 	return l
 }
 
 func (l *Lexer) Advance() {
-	l.current_char = l.position.advance(l.current_char)
+	l.current_char = l.position.Advance(l.current_char)
 }
 
-func (l *Lexer) MakeTokens() []Token {
+func (l *Lexer) MakeTokens() []token.Token {
 	fmt.Println("creating a token list")
 
 	return l.tokens
 }
 
-func (l *Lexer) make_number() Token {
+func (l *Lexer) make_number() token.Token {
 	fmt.Println("Making a number")
 	dot_count := 0
 	dot_count++
@@ -44,9 +45,10 @@ func (l *Lexer) make_number() Token {
 	char := l.current_char
 
 	if char != "" {
-		token := Token{"TT_INT", "1"}
-		return token
+		tok := token.New("TT_INT", "1")
+		return tok
 	}
 
-	return Token{"TT_INT", "2"}
+	tok := token.New("TT_INT", "2")
+	return tok
 }
