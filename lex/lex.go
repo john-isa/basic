@@ -54,6 +54,7 @@ func (l *Lexer) Advance() {
 //=============================================================================
 func (l *Lexer) MakeTokens() []token.Token {
 	fmt.Println("creating a token list")
+	fmt.Println("current_char = ", l.current_char)
 
 	for l.current_char != "" {
 		switch l.current_char {

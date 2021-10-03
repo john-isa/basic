@@ -16,19 +16,15 @@ type Position struct {
 // RETURNS    : The Position object
 //=============================================================================
 func New(text_ string) Position {
-	p := Position{}
-
-	p.text = text_
-	p.index = -1
-	p.line = 0
-	p.column = -1
+	p := Position{text: text_, index: -1, line: 0, column: -1}
 
 	return p
 }
 
 //=============================================================================
-// Advance    : gets the next character in the current text and returns it to
+// Advance    : Fetches the next character in the current text and returns it to
 //              the caller.
+//
 //              If the current_char is valid and it is not at the end of the
 //              text then the next character is returned, otherwise an emtpy
 //              character is returned.
@@ -37,23 +33,21 @@ func New(text_ string) Position {
 // RETURNS    : next characeter in the stream, or an empty character.
 //=============================================================================
 func (p *Position) Advance(current_char string) string {
-	char := current_char
+	p.index = p.index + 1
+	p.column = p.column + 1
 
-	p.index++
-	p.column++
-
-	if char != "" {
-		if char == "\n" {
-			p.line++
+	if current_char != "" {
+		if current_char == "\n" {
+			p.line = p.line + 1
 			p.column = 0
 		}
 	} else {
-		return "" // returning an empty char
+		return "" // not a valid character, returning empty character
 	}
 
 	if p.index >= len(p.text) {
-		return "" // returning an empty char
+		return "" // reached the End-Of-Text, returning an empty character
 	}
 
-	return p.text[p.index : p.index+1]
+	return p.text[p.index : p.index+1] // returning the next current valid character
 }

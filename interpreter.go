@@ -11,7 +11,7 @@ import (
 
 func readLine(r *bufio.Reader) (string, error) {
 
-	fmt.Print("BASIC-> ")
+	fmt.Print("BASIC -%> ")
 	return r.ReadString('\n')
 }
 
