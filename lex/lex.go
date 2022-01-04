@@ -1,7 +1,6 @@
 package lex
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/john-isa/basic/constant"
@@ -9,24 +8,27 @@ import (
 	"github.com/john-isa/basic/token"
 )
 
-//=============================================================================
-// Lexer object
-//=============================================================================
+// The Lexer object contains the current position of the text being parsed, its poisution in the text, and
+// also builds the list of tokens that represent the program.
+//
+// There is also storage for INFO/Error details.
+//
+// No inputs required.
 type Lexer struct {
-	details      string
-	position     pos.Position
-	current_char string
-	tok          token.Token
-	tokens       []token.Token
+	current_char string        // The character being studied.
+	position     pos.Position  // The position of the  current character being studied.
+	tok          token.Token   // The token istself
+	tokens       []token.Token // The list of tokens that represents the program.
+	details      string        // The error or info details.
 }
 
-//=============================================================================
-// New        : Creates a new Lexer bject for use
-// PARAMETERS : The text that will be parsed
-// RETURNS    : A lexer object
-//=============================================================================
+// New creates a new Lexer object that stores the text and sets all the parameters to point to the start.
+//
+// The text that will be parsed is supplied as a parameter and a Lexer object is returned.
 func New(text string) Lexer {
-	fmt.Println("Creating the Lexer")
+	//
+	// Create the lexer that will create and store the token list.
+	//
 	l := Lexer{}
 
 	l.details = ""
@@ -38,27 +40,20 @@ func New(text string) Lexer {
 	return l
 }
 
-//=============================================================================
-// Advance    : Fetches the next valid character in the text
-// PARAMETERS : none
-// RETURNS    : none
-//=============================================================================
+// Advance to the next character in the text. Returns emtpy string if the EOT is reached.
 func (l *Lexer) Advance() {
-	l.current_char = l.position.Advance(l.current_char)
+	l.current_char = l.position.Advance()
 }
 
-//=============================================================================
-// MakeTokens : Scans the text and parses it into a series of tokens in a list
-// PARAMETERS : none
-// RETURNS    : a Token array (slice)
-//=============================================================================
+//=============================================================================.
+// MakeTokens : Scans the text and parses it into a series of tokens in a list.
+// PARAMETERS : none.
+// RETURNS    : a Token array (slice).
+//=============================================================================.
 func (l *Lexer) MakeTokens() []token.Token {
-	fmt.Println("creating a token list")
-	fmt.Println("current_char = ", l.current_char)
-
 	for l.current_char != "" {
 		switch l.current_char {
-		case " ", "\t":
+		case " ", "\n", "\t":
 			l.Advance()
 
 		case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
@@ -88,13 +83,13 @@ func (l *Lexer) MakeTokens() []token.Token {
 	return l.tokens
 }
 
-//=============================================================================
-// make_number: parses any string of digits and create the correct number token
-// PARAMETERS : none
-// RETURNS    : none
-//=============================================================================
+//=============================================================================.
+// make_number: Parses any string of digits to create the correct number token
+//              and store it.
+// PARAMETERS : none.
+// RETURNS    : none.
+//=============================================================================.
 func (l *Lexer) make_number() {
-	fmt.Println("Making a number")
 	number := ""
 	dot_count := 0
 
