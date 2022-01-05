@@ -58,27 +58,32 @@ func (l *Lexer) MakeTokens() []token.Token {
 
 		case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
 			l.make_number()
-
+			l.tokens = append(l.tokens, l.tok)
 		case "+":
 			l.tok = token.New(constant.TT_PLUS, "")
+			l.tokens = append(l.tokens, l.tok)
 			l.Advance()
 		case "-":
 			l.tok = token.New(constant.TT_MINUS, "")
+			l.tokens = append(l.tokens, l.tok)
 			l.Advance()
 		case "/":
 			l.tok = token.New(constant.TT_DIV, "")
+			l.tokens = append(l.tokens, l.tok)
 			l.Advance()
 		case "*":
 			l.tok = token.New(constant.TT_MUL, "")
+			l.tokens = append(l.tokens, l.tok)
 			l.Advance()
 		case "(":
 			l.tok = token.New(constant.TT_LPAREN, "")
+			l.tokens = append(l.tokens, l.tok)
 			l.Advance()
 		case ")":
 			l.tok = token.New(constant.TT_RPAREN, "")
+			l.tokens = append(l.tokens, l.tok)
 			l.Advance()
 		}
-		l.tokens = append(l.tokens, l.tok)
 	}
 	return l.tokens
 }
@@ -94,16 +99,22 @@ func (l *Lexer) make_number() {
 	dot_count := 0
 
 	// check that the current character is a digit or a decimal point (dot)
-	for strings.Contains(constant.DIGITS, l.current_char) || l.current_char == constant.DECIMAL_POINT {
+	for strings.Contains(constant.DIGITS, l.current_char) {
 		if l.current_char == constant.DECIMAL_POINT {
 			if dot_count == 1 {
-				l.tok = token.Token{}
+				l.tok = token.New(constant.TT_ILLEGAL_CHAR, constant.TT_ILLEGAL_CHAR)
+				l.details = "Too many decimal points to make a number!"
+				return
+			} else {
+				dot_count++
 			}
-			dot_count++
-		} else {
-			number = number + l.current_char
 		}
+		number = number + l.current_char
 		l.Advance()
+
+		if l.current_char == "" || l.current_char == " " {
+			break
+		}
 	}
 
 	if dot_count == 0 {

@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/john-isa/basic/lex"
 )
@@ -14,10 +16,10 @@ func readLine(r *bufio.Reader) (string, error) {
 }
 
 func Run() {
-	// reader := bufio.NewReader(os.Stdin) // create a reader to read from the command line
-	// text, _ := readLine(reader)         // read a line of text
-	// text = strings.TrimSpace(text)      // Trims all undesired spaces
-	text := "1 + 1"
+	reader := bufio.NewReader(os.Stdin) // create a reader to read from the command line
+	text, _ := readLine(reader)         // read a line of text
+	text = strings.TrimSpace(text)      // Trims all undesired spaces
+	// text := "1 + 1"
 	lexer := lex.New(text)       // create a lexer that contains the string to be parsed
 	tokens := lexer.MakeTokens() // parse the string into an array of tokens
 

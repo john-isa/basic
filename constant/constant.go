@@ -1,7 +1,7 @@
 package constant
 
-// DIGITS: list of 0 to 9
-const DIGITS string = "0123456789"
+// DIGITS: list of 0 to 9 (for integers) and a decimal point (for floating point numbers)
+const DIGITS string = "0123456789."
 
 // Decimal point indicator for the AU locale
 const DECIMAL_POINT = "."
