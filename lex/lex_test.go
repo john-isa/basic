@@ -53,3 +53,39 @@ func TestMakeTokens(t *testing.T) {
 	assert.Equal(t, "TT_MINUS", tokenList[3].ToString(), "The 'MINUS' operator")
 	assert.Equal(t, "TT_FLOAT: 4.2", tokenList[4].ToString(), "The third number")
 }
+func TestMake_number(t *testing.T) {
+	lexer := New("1")
+	tokenList := lexer.MakeTokens()
+	assert.Equal(t, "TT_INT: 1", tokenList[0].ToString(), "Correct INYEGER")
+
+	lexer = New(".1")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "TT_FLOAT: 0.1", tokenList[0].ToString(), "Correct FLOAT")
+
+	lexer = New("0.1")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "TT_FLOAT: 0.1", tokenList[0].ToString(), "Correct FLOAT")
+
+	lexer = New("1.")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "TT_FLOAT: 1.", tokenList[0].ToString(), "Correct FLOAT")
+
+	lexer = New("1.0")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "TT_FLOAT: 1.0", tokenList[0].ToString(), "Correct FLOAT")
+
+	lexer = New("1..")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "ILLEGAL_CHAR: ILLEGAL_CHAR", tokenList[0].ToString(), "The first number")
+	assert.Equal(t, "Too many decimal points '.' to make a number!", lexer.details)
+
+	lexer = New("1a")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "ILLEGAL_CHAR: ILLEGAL_CHAR", tokenList[0].ToString(), "The first number")
+	assert.Equal(t, "The character 'a' cannot be part of a number!", lexer.details)
+
+	lexer = New("1!")
+	tokenList = lexer.MakeTokens()
+	assert.Equal(t, "ILLEGAL_CHAR: ILLEGAL_CHAR", tokenList[0].ToString(), "The first number")
+	assert.Equal(t, "The character '!' cannot be part of a number!", lexer.details)
+}
