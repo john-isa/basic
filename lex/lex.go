@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/john-isa/basic/constant"
-	"github.com/john-isa/basic/pos"
-	"github.com/john-isa/basic/token"
+	"basic/constant"
+	"basic/pos"
+	"basic/token"
 )
 
-// The Lexer object contains the current position of the text being parsed, its poisution in the text, and
+// Lexer contains the current position of the text being parsed, its poisution in the text, and
 // also builds the list of tokens that represent the program.
 //   There is also storage for INFO/Error details.
 //   No inputs required.
@@ -48,10 +48,10 @@ func (l *Lexer) Advance() {
 func (l *Lexer) MakeTokens() []token.Token {
 	for l.current_char != "" {
 		switch l.current_char {
-		case " ", "\n", "\t":
+		case constant.WHITESPACE:
 			l.Advance()
 
-		case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".":
+		case constant.DIGITS:
 			l.make_number()
 			l.tokens = append(l.tokens, l.tok)
 		case "+":
@@ -93,7 +93,7 @@ func (l *Lexer) make_number() {
 	// check that the current character is a digit or a decimal point (dot)
 	for strings.Contains(constant.DIGITS, l.current_char) {
 
-		if l.current_char == constant.DECIMAL_POINT {
+		if l.current_char == constant.DOT {
 			if dot_count == 1 {
 				l.tok = token.New(constant.TT_ILLEGAL_CHAR, constant.TT_ILLEGAL_CHAR)
 				l.details = fmt.Sprintf("Too many decimal points '%s' to make a number!", l.current_char)

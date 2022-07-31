@@ -1,5 +1,7 @@
 github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 h1:DDGfHa7BWjL4YnC6+E63dPcxHo2sUxDIu8g3QgEJdRY=
 github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869/go.mod h1:Ekp36dRnpXw/yCqJaO+ZrUyxD+3VXMFFr56k5XYrpB4=
+github.com/john-isa/basic v0.0.0-20210629091938-dac55ded60a2 h1:Po7gc/Otn61nGB1cA6FJq9WE5VcDfaIEbDcSPtDY6a4=
+github.com/john-isa/basic v0.0.0-20210629091938-dac55ded60a2/go.mod h1:879B9qZAe0LJBqHuUNREH/f2PGoeQZLuyPPMk+N85uI=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
