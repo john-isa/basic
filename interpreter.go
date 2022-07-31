@@ -33,23 +33,25 @@ func readProgram(name string) ([]byte, error) {
 	return program, nil
 }
 
-func Run(program string) {
+func Run() {
 	var (
 		text []byte
 		err  error
 	)
 
-	if len(program) == 0 {
+	args := os.Args
+
+	if len(args) == 1 {
 		text, _ = readLine() // Read a line of text.
 	} else {
-		text, err = readProgram(program)
+		text, err = readProgram(args[1])
 		if err != nil {
 			return
 		}
 	}
 
-	lexer := lex.New(text)       // Create a lexer that contains the string to be parsed
-	tokens := lexer.MakeTokens() // Parse the string into an array of tokens
+	lexer := lex.New(string(text[:])) // Create a lexer that contains the string to be parsed
+	tokens := lexer.MakeTokens()      // Parse the string into an array of tokens
 
 	fmt.Println(tokens)
 }
@@ -58,5 +60,5 @@ func Run(program string) {
 // The main entry point
 //==========================================================================================
 func main() {
-	Run("") //
+	Run()
 }
