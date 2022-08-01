@@ -7,22 +7,29 @@ type Token struct {
 	value string
 }
 
+type TokenList []Token
+
 // New creates a new Token for use. It contains the:
-//   name  - The name of the Token, and the,
-//   value - The value of the Token
-// It returns the Token object.
-func New(n string, v string) Token {
-	t := Token{name: n, value: v}
-	return t
+//   PARAMETERS : name  - The name of the Token, and the,
+//              : value - The value of the Token
+//   RETURNS    : the Token object.
+func New(name string, value string) Token {
+	return Token{
+		name:  name,
+		value: value,
+	}
 }
 
 // New creates a new list of Tokens (slice).
 //   PARAMETERS : none
 //   RETURNS    : The Token slice (array - currently empty)
-func NewTokenList() []Token {
-	tokens := []Token{}
+func NewTokenList() TokenList {
+	return TokenList{}
+}
 
-	return tokens
+// Add inserts the given token into the tokenList.
+func (l TokenList) Add(tok Token) {
+	l = append(l, tok)
 }
 
 // ToString creates a string representation of the name and value of the Token

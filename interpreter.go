@@ -1,28 +1,26 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/john-isa/basic/lex"
 )
 
-func readLine() ([]byte, error) {
-	fmt.Print("BASIC -%> ") // Show the prompt.
+// func readLine() ([]byte, error) {
+// 	fmt.Print("BASIC -%> ") // Show the prompt.
 
-	reader := bufio.NewReader(os.Stdin)  // Create a reader to read from the command line.
-	text, err := reader.ReadString('\n') // Read a line of text.
-	if err != nil {
-		return nil, err
-	}
+// 	reader := bufio.NewReader(os.Stdin)  // Create a reader to read from the command line.
+// 	text, err := reader.ReadString('\n') // Read a line of text.
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	text = strings.TrimSpace(text) // Trim all undesired spaces.
-	bytes := []byte(text)
+// 	text = strings.TrimSpace(text) // Trim all undesired spaces.
+// 	bytes := []byte(text)
 
-	return bytes, nil
-}
+// 	return bytes, nil
+// }
 
 func readProgram(name string) ([]byte, error) {
 	program, err := os.ReadFile(name)
@@ -39,15 +37,20 @@ func Run() {
 		err  error
 	)
 
-	args := os.Args
+	// args := os.Args
 
-	if len(args) == 1 {
-		text, _ = readLine() // Read a line of text.
-	} else {
-		text, err = readProgram(args[1])
-		if err != nil {
-			return
-		}
+	// if len(args) == 1 {
+	// 	text, _ = readLine() // Read a line of text.
+	// } else {
+	// 	text, err = readProgram(args[1])
+	// 	if err != nil {
+	// 		return
+	// 	}
+	// }
+
+	text, err = readProgram("math.bas")
+	if err != nil {
+		return
 	}
 
 	lexer := lex.New(string(text[:])) // Create a lexer that contains the string to be parsed

@@ -1,24 +1,37 @@
 package pos
 
-// Position object stores the text and the current posotion of the current
-// character being studied.
+// Program - the text that is parsed and executed/compiled
+type Program interface {
+	Advance()
+	GetPosition()
+}
+
+// Position object stores the text and the current position of the current character being studied.
 type Position struct {
 	text   string // The text of the code to be parsed.
-	index  int    // The position of the current character in the text.
-	line   int    // The current line number of the text.
-	column int    // The current column of the text.
+	length int64  // The length of the program text.
+	index  int64  // The position of the current character in the text.
+	line   int64  // The current line number of the text.
+	column int64  // The current column of the text.
 }
 
 // New creates a new Position object to keep track of the current location in the text.
 //
 // NOTE : Initially points to just before the start of text.
-func New(text_ string) Position {
+func New(text string) Position {
+	textLength := int64(len(text))
 	return Position{
-		text:   text_,
+		text:   text,
+		length: textLength,
 		index:  -1, // Point to just before the first character in the text.
 		line:   0,  // Point to the very first line of the text.
 		column: -1, // Point to just befre the first column of the text.
 	}
+}
+
+// GwetPosition - returns the current cursor position (line, column).
+func (p *Position) GetPosition() (int64, int64) {
+	return p.line, p.column
 }
 
 // Advance fetches the next character in the current text and returns it to the caller.
@@ -29,13 +42,23 @@ func (p *Position) Advance() string {
 	//
 	// Point to the next position in the text.
 	//
-	p.index = p.index + 1
-	p.column = p.column + 1
+	p.index++
+	p.column++
 
 	// Fetch the next character while we are in range of text.
-	if p.index < len(p.text) {
-		return p.text[p.index : p.index+1] // returning the next character.
+	if p.index < p.length {
+		character := p.text[p.index : p.index+1]
+
+		switch character {
+		case "\n": // End-Of-Line cgharacter
+			p.line++     // Point to the next line of code.
+			p.column = 0 // Reset the column pointer.
+			p.index++    // Point to the next character.
+			return character
+		default:
+			return character
+		}
 	} else {
-		return "" // We are now at EOT
+		return "" // We are now at EOT (End-Of-Text).
 	}
 }
