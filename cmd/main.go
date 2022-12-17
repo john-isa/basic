@@ -41,7 +41,7 @@ func Run() {
 	args := os.Args
 
 	if len(args) == 1 {
-		text, _ = readLine() // Read a line of text.
+		text, err = readLine() // Read a line of text.
 		if err != nil {
 			return
 		}
@@ -52,15 +52,15 @@ func Run() {
 		}
 	}
 
-	lexer := lex.New(string(text[:])) // Create a lexer that contains the string to be parsed
-	tokens := lexer.MakeTokens()      // Parse the string into an array of tokens
+	lexer := lex.New(string(text[:])) // Create a lexer that contains the string to be parsed.
+	tokens := lexer.MakeTokens()      // Parse the string into an array of tokens.
 
 	fmt.Println(tokens)
 }
 
-//==========================================================================================
-// The main entry point
-//==========================================================================================
+// ==========================================================================================.
+// The main entry point.
+// ==========================================================================================.
 func main() {
 	Run()
 }

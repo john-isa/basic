@@ -112,7 +112,6 @@ func (l *Lexer) make_number() token.Token {
 		default:
 			if (len(l.current_char) == 1 && l.current_char != " ") || (len(l.current_char) == 1 && l.current_char != "\n") || (len(l.current_char) == 1 && l.current_char != "\t") {
 				tokenType = constant.TT_ILLEGAL_CHAR
-				number = constant.TT_ILLEGAL_CHAR
 			}
 
 			l.tok = token.New(tokenType, l.current_char)
