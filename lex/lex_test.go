@@ -10,12 +10,12 @@ func TestNew(t *testing.T) {
 	lexer := New("1 + 1")
 
 	assert.Equal(t, "1", lexer.current_char)
-	assert.NotEqual(t, nil, &lexer.position, "Starts just before the begining of Text")
+	assert.NotEqual(t, nil, &lexer.position, "Starts just before the beginning of Text")
 
 	assert.NotEqual(t, nil, &lexer.tok, "A token is born!")
-	assert.NotEqual(t, nil, &lexer.tokens, "List of tokens")
+	assert.NotEqual(t, nil, &lexer.tokenList, "List of tokens")
 
-	assert.Equal(t, "", lexer.details, "Contains INFO/ERROR deatils")
+	assert.Equal(t, "", lexer.details, "Contains INFO/ERROR details")
 }
 
 func TestAdvance(t *testing.T) {
@@ -56,7 +56,7 @@ func TestMakeTokens(t *testing.T) {
 func TestMake_number(t *testing.T) {
 	lexer := New("1")
 	tokenList := lexer.MakeTokens()
-	assert.Equal(t, "TT_INT: 1", tokenList[0].ToString(), "Correct INYEGER")
+	assert.Equal(t, "TT_INT: 1", tokenList[0].ToString(), "Correct INTEGER")
 
 	lexer = New(".1")
 	tokenList = lexer.MakeTokens()

@@ -25,11 +25,11 @@ func New(text string) Position {
 		length: textLength,
 		index:  -1, // Point to just before the first character in the text.
 		line:   0,  // Point to the very first line of the text.
-		column: -1, // Point to just befre the first column of the text.
+		column: -1, // Point to just before the first column of the text.
 	}
 }
 
-// GwetPosition - returns the current cursor position (line, column).
+// GetPosition - returns the current cursor position (line, column).
 func (p *Position) GetPosition() (int64, int64) {
 	return p.line, p.column
 }
@@ -37,7 +37,7 @@ func (p *Position) GetPosition() (int64, int64) {
 // Advance fetches the next character in the current text and returns it to the caller.
 //
 // If the current_char is valid and it is not at the end of the text then the next
-// character is returned, otherwise an emtpy character is returned.
+// character is returned, otherwise an empty character is returned.
 func (p *Position) Advance() string {
 	//
 	// Point to the next position in the text.
@@ -50,7 +50,7 @@ func (p *Position) Advance() string {
 		character := p.text[p.index : p.index+1]
 
 		switch character {
-		case "\n": // End-Of-Line cgharacter
+		case "\n": // End-Of-Line character
 			p.line++     // Point to the next line of code.
 			p.column = 0 // Reset the column pointer.
 			p.index++    // Point to the next character.
