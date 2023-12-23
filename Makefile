@@ -1,7 +1,7 @@
 init: distclean tidy
 
 build:
-	go build -o build/ cmd/main.go
+	go build -o build/basic cmd/main.go
 
 run:
 	go run cmd/main.go

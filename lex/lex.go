@@ -69,7 +69,7 @@ func (l *Lexer) MakeTokens() token.TokenList {
 			l.tokenList = append(l.tokenList, token.New(constant.TT_MUL, ""))
 			l.Advance()
 		case "(":
-			l.tokenList = append(l.tokenList, token.New(constant.TT_MUL, ""))
+			l.tokenList = append(l.tokenList, token.New(constant.TT_LPAREN, ""))
 			l.Advance()
 		case ")":
 			l.tokenList = append(l.tokenList, token.New(constant.TT_RPAREN, ""))
@@ -109,21 +109,14 @@ func (l *Lexer) make_number() token.Token {
 		case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
 			number = number + l.current_char
 			l.Advance()
+		case " ", "\n", "\t":
+			return token.New(tokenType, number)
 		default:
-			if (len(l.current_char) == 1 && l.current_char != " ") || (len(l.current_char) == 1 && l.current_char != "\n") || (len(l.current_char) == 1 && l.current_char != "\t") {
-				tokenType = constant.TT_ILLEGAL_CHAR
-			}
-
-			l.tok = token.New(tokenType, l.current_char)
-			return l.tok
+			return token.New(constant.TT_ILLEGAL_CHAR, l.current_char)
 		}
 	}
 
-	if (len(l.current_char) == 1 && l.current_char != " ") || (len(l.current_char) == 1 && l.current_char != "\n") || (len(l.current_char) == 1 && l.current_char != "\t") {
-		tokenType = constant.TT_ILLEGAL_CHAR
-		number = constant.TT_ILLEGAL_CHAR
-	}
-
 	l.tok = token.New(tokenType, number)
+
 	return l.tok
 }
